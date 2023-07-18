@@ -34,8 +34,14 @@ public class LaptopController {
     }
 
     @PostMapping("/laptops")
-    public Laptop save( @RequestBody Laptop laptop ){
-        return laptopRepository.save(laptop);
+    public ResponseEntity<Laptop> create( @RequestBody Laptop laptop ){
+
+        if( laptop.getId() != null){
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
+        } else {
+            return new ResponseEntity<>( laptopRepository.save(laptop), HttpStatus.OK );
+        }
+
     }
 
 
